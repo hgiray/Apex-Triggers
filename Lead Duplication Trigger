@@ -1,0 +1,8 @@
+trigger leadduplication on Lead (before insert) {
+    for(Lead l: trigger.new){ 
+    list<Lead> lds= [select id from lead where firstname=:l.firstname and lastname=:l.lastname];
+        if (lds.size()>0){
+            l.firstname.adderror ('You cannot create a duplicate lead.');
+        }
+    }
+}
